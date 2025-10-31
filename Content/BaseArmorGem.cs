@@ -1,6 +1,8 @@
 ﻿using ArmorGems.Content;
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -10,12 +12,46 @@ namespace ArmorGems.Content;
 
 internal abstract class BaseArmorGem<T> : ModItem
 {
-    public abstract int HeadID { get; }
-    public abstract int BodyID { get; }
-    public abstract int LegsID { get; }
+    public abstract int HeadArmorID { get; }
+    public abstract int BodyArmorID { get; }
+    public abstract int LegsArmorID { get; }
+
+    public abstract int HeadItemID { get; }
+    public abstract int BodyItemID { get; }
+    public abstract int LegsItemID { get; }
 
     public static string SetBonusKey;
     public override LocalizedText Tooltip => Language.GetText(SetBonusKey ?? "placeholder");
+
+    public override LocalizedText DisplayName
+    {
+        get
+        {
+            string headName = Lang.GetItemNameValue(HeadItemID);
+            string bodyName = Lang.GetItemNameValue(BodyItemID);
+            string legsName = Lang.GetItemNameValue(LegsItemID);
+
+            int minimumStringLength = Math.Min(headName.Length, Math.Min(bodyName.Length, legsName.Length));
+
+            StringBuilder commonPrefix = new StringBuilder();
+
+            for (int i = 0; i < minimumStringLength; i++)
+            {
+                if (headName[i] == bodyName[i] && headName[i] == legsName[i])
+                {
+                    commonPrefix.Append(headName[i]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return Mod.GetLocalization("Items.GemDisplayName").WithFormatArgs(commonPrefix);
+        }
+    }
+
+    public override string Texture => "ArmorGems/Content/BaseArmorGem";
 
     public override void SetDefaults()
     {
@@ -29,11 +65,11 @@ internal abstract class BaseArmorGem<T> : ModItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         int savedHead = player.head;
-        player.head = HeadID;
+        player.head = HeadArmorID;
         int savedBody = player.body;
-        player.body = BodyID;
+        player.body = BodyArmorID;
         int savedLegs = player.legs;
-        player.legs = LegsID;
+        player.legs = LegsArmorID;
 
         player.UpdateArmorSets(player.whoAmI);
 
@@ -43,7 +79,7 @@ internal abstract class BaseArmorGem<T> : ModItem
     }
 }
 
-internal sealed class ArmorGemTooltipLoader : ModSystem
+internal sealed class ArmorGemAutoLoader : ModSystem
 {
     private static string CapturedSetBonusKey { get; set; }
 
@@ -61,9 +97,9 @@ internal sealed class ArmorGemTooltipLoader : ModSystem
 
             if (modItemType.BaseType.IsGenericType && modItemType.BaseType.GetGenericTypeDefinition() == baseArmorGemType)
             {
-                dummyPlayer.head = (int)modItemType.GetProperty("HeadID").GetValue(modItem);
-                dummyPlayer.body = (int)modItemType.GetProperty("BodyID").GetValue(modItem);
-                dummyPlayer.legs = (int)modItemType.GetProperty("LegsID").GetValue(modItem);
+                dummyPlayer.head = (int)modItemType.GetProperty("HeadArmorID").GetValue(modItem);
+                dummyPlayer.body = (int)modItemType.GetProperty("BodyArmorID").GetValue(modItem);
+                dummyPlayer.legs = (int)modItemType.GetProperty("LegsArmorID").GetValue(modItem);
 
                 dummyPlayer.UpdateArmorSets(0);
 

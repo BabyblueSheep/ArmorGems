@@ -1,9 +1,2 @@
-Items: {
-	EbonwoodArmorGem: {
-		DisplayName: Ebonwood Armor Gem
-		Tooltip: ""
-	}
-
-	SolarArmorGem.DisplayName: Solar Armor Gem
-	NebulaArmorGem.DisplayName: Nebula Armor Gem
-}
+# There's no space before Gem because there should very likely be a space from fetching the common substring of armor pieces
+Items.GemDisplayName: "{0}Gem"
