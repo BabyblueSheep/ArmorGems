@@ -1,9 +1,14 @@
 ﻿using ArmorGems.Content;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using rail;
+using ReLogic.Content;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,11 +25,25 @@ internal abstract class BaseArmorGem<T> : ModItem
     public abstract int BodyItemID { get; }
     public abstract int LegsItemID { get; }
 
-    public static string SetBonusKey;
-    public override LocalizedText Tooltip => Language.GetText(SetBonusKey ?? "placeholder");
+    public static string SetBonusKey = null;
+    public static object SetBonusArg0 = null;
+    public override LocalizedText Tooltip
+    {
+        get
+        {
+            LocalizedText tooltip = Language.GetText(SetBonusKey ?? "placeholder");
+
+            if (SetBonusArg0 != null)
+            {
+                return tooltip.WithFormatArgs(SetBonusArg0);
+            }
+            return tooltip;
+        }
+    }
 
     public override LocalizedText DisplayName
     {
+        // TODO: cache common substring somewhere
         get
         {
             string headName = Lang.GetItemNameValue(HeadItemID);
@@ -51,6 +70,11 @@ internal abstract class BaseArmorGem<T> : ModItem
         }
     }
 
+    public static Color TintColor;
+
+    public static int Rarity;
+    public static int Value;
+
     public override string Texture => "ArmorGems/Content/BaseArmorGem";
 
     public override void SetDefaults()
@@ -58,8 +82,9 @@ internal abstract class BaseArmorGem<T> : ModItem
         Item.width = 32;
         Item.height = 22;
         Item.accessory = true;
-        Item.rare = ItemRarityID.Yellow;
-        Item.value = Item.buyPrice(0, 30, 0, 0);
+        Item.rare = Rarity;
+        Item.value = Value;
+        Item.color = TintColor;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)
@@ -81,13 +106,16 @@ internal abstract class BaseArmorGem<T> : ModItem
 
 internal sealed class ArmorGemAutoLoader : ModSystem
 {
-    private static string CapturedSetBonusKey { get; set; }
+    private static string CapturedSetBonusKey;
+    private static object CapturedSetBonusArg0;
 
     public override void SetStaticDefaults()
     {
         On_Language.GetTextValue_string += CaptureSetBonus;
+        On_Language.GetTextValue_string_object += CaptureSetBonus;  
 
         Player dummyPlayer = new Player();
+        Item dummyItem = new Item();
 
         Type baseArmorGemType = typeof(BaseArmorGem<int>).GetGenericTypeDefinition();
 
@@ -103,17 +131,77 @@ internal sealed class ArmorGemAutoLoader : ModSystem
 
                 dummyPlayer.UpdateArmorSets(0);
 
-                FieldInfo field = modItemType.GetField("SetBonusKey", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-                field.SetValue(null, CapturedSetBonusKey);
+                FieldInfo setBonusKeyField = modItemType.GetField("SetBonusKey", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                setBonusKeyField.SetValue(null, CapturedSetBonusKey);
+                FieldInfo setBonusArg0Field = modItemType.GetField("SetBonusArg0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                setBonusArg0Field.SetValue(null, CapturedSetBonusArg0);
+
+
+
+                int itemID = (int)modItemType.GetProperty("BodyItemID").GetValue(modItem);
+                dummyItem.SetDefaults(itemID);
+
+                FieldInfo rarityField = modItemType.GetField("Rarity", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                rarityField.SetValue(null, dummyItem.rare);
+                FieldInfo valueField = modItemType.GetField("Value", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                valueField.SetValue(null, dummyItem.value);
+
+
+
+                Main.instance.LoadItem(itemID);
+                Asset<Texture2D> itemAsset = TextureAssets.Item[itemID];
+                if (itemAsset != null)
+                {
+                    Main.QueueMainThreadAction(() =>
+                    {
+                        Texture2D itemTexture = itemAsset.Value;
+                        Color[] textureData = new Color[itemTexture.Width * itemTexture.Height];
+                        itemTexture.GetData(textureData);
+
+                        float averageRed = 0;
+                        float averageGreen = 0;
+                        float averageBlue = 0;
+                        int colorCount = 0;
+
+                        foreach (Color color in textureData)
+                        {
+                            if (color.A > 0)
+                            {
+                                averageRed += color.R * color.R / (255f * 255f);
+                                averageGreen += color.G * color.G / (255f * 255f);
+                                averageBlue += color.B * color.B / (255f * 255f);
+                                colorCount++;
+                            }
+                        }
+
+                        averageRed /= colorCount;
+                        averageGreen /= colorCount;
+                        averageBlue /= colorCount;
+
+                        Color averageColor = new Color(MathF.Sqrt(averageRed), MathF.Sqrt(averageGreen), MathF.Sqrt(averageBlue));
+
+                        FieldInfo colorField = modItemType.GetField("TintColor", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                        colorField.SetValue(null, averageColor);
+                    });
+                }
             }
         }
 
         On_Language.GetTextValue_string -= CaptureSetBonus;
+        On_Language.GetTextValue_string_object -= CaptureSetBonus;
     }
 
     private string CaptureSetBonus(On_Language.orig_GetTextValue_string orig, string key)
     {
         CapturedSetBonusKey = key;
+        CapturedSetBonusArg0 = null;
         return orig(key);
+    }
+
+    private string CaptureSetBonus(On_Language.orig_GetTextValue_string_object orig, string key, object arg0)
+    {
+        CapturedSetBonusKey = key;
+        CapturedSetBonusArg0 = arg0;
+        return orig(key, arg0);
     }
 }
