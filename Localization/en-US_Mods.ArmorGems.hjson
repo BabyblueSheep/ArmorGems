@@ -1,0 +1,9 @@
+Items: {
+	EbonwoodArmorGem: {
+		DisplayName: Ebonwood Armor Gem
+		Tooltip: ""
+	}
+
+	SolarArmorGem.DisplayName: Solar Armor Gem
+	NebulaArmorGem.DisplayName: Nebula Armor Gem
+}

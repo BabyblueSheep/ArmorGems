@@ -1,0 +1,3 @@
+displayName = Armor Gems
+author = caligulasAquarium
+version = 0.1
