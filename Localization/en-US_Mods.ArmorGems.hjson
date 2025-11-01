@@ -1,2 +1,2 @@
 # There's no space before Gem because there should very likely be a space from fetching the common substring of armor pieces
-Items.GemDisplayName: "{0}Gem"
+Items.GemDisplayName: "{0}Armor Gem"

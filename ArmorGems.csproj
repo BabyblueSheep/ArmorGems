@@ -10,5 +10,10 @@
 	<ItemGroup Label="Publicized assemblies">
 		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Content\NewFolder1\" />
+	  <Folder Include="Content\NewFolder\" />
+	</ItemGroup>
 
 </Project>
