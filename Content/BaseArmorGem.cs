@@ -19,11 +19,11 @@ internal abstract class BaseArmorGem<T> : ModItem
 {
     public abstract int HeadArmorID { get; }
     public abstract int BodyArmorID { get; }
-    public abstract int LegsArmorID { get; }
+    public abstract int? LegsArmorID { get; }
 
     public abstract int HeadItemID { get; }
     public abstract int BodyItemID { get; }
-    public abstract int LegsItemID { get; }
+    public abstract int? LegsItemID { get; }
 
     public static string SetBonusKey = null;
     public static object SetBonusArg0 = null;
@@ -31,7 +31,7 @@ internal abstract class BaseArmorGem<T> : ModItem
     {
         get
         {
-            LocalizedText tooltip = Language.GetText(SetBonusKey ?? "placeholder");
+            LocalizedText tooltip = Language.GetText(SetBonusKey ?? "");
 
             if (SetBonusArg0 != null)
             {
@@ -48,7 +48,7 @@ internal abstract class BaseArmorGem<T> : ModItem
         {
             string headName = Lang.GetItemNameValue(HeadItemID);
             string bodyName = Lang.GetItemNameValue(BodyItemID);
-            string legsName = Lang.GetItemNameValue(LegsItemID);
+            string legsName = Lang.GetItemNameValue(LegsItemID ?? BodyItemID);
 
             int minimumStringLength = Math.Min(headName.Length, Math.Min(bodyName.Length, legsName.Length));
 
@@ -94,7 +94,7 @@ internal abstract class BaseArmorGem<T> : ModItem
         int savedBody = player.body;
         player.body = BodyArmorID;
         int savedLegs = player.legs;
-        player.legs = LegsArmorID;
+        player.legs = LegsArmorID ?? -1;
 
         player.UpdateArmorSets(player.whoAmI);
 
@@ -127,14 +127,23 @@ internal sealed class ArmorGemAutoLoader : ModSystem
             {
                 dummyPlayer.head = (int)modItemType.GetProperty("HeadArmorID").GetValue(modItem);
                 dummyPlayer.body = (int)modItemType.GetProperty("BodyArmorID").GetValue(modItem);
-                dummyPlayer.legs = (int)modItemType.GetProperty("LegsArmorID").GetValue(modItem);
+                dummyPlayer.legs = (int?)modItemType.GetProperty("LegsArmorID").GetValue(modItem) ?? dummyPlayer.body;
+                dummyPlayer.setBonus = "";
 
                 dummyPlayer.UpdateArmorSets(0);
 
                 FieldInfo setBonusKeyField = modItemType.GetField("SetBonusKey", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-                setBonusKeyField.SetValue(null, CapturedSetBonusKey);
                 FieldInfo setBonusArg0Field = modItemType.GetField("SetBonusArg0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-                setBonusArg0Field.SetValue(null, CapturedSetBonusArg0);
+                if (dummyPlayer.setBonus == "")
+                {
+                    setBonusKeyField.SetValue(null, null);
+                    setBonusArg0Field.SetValue(null, null);
+                }
+                else
+                {
+                    setBonusKeyField.SetValue(null, CapturedSetBonusKey);
+                    setBonusArg0Field.SetValue(null, CapturedSetBonusArg0);
+                }
 
 
 
@@ -167,9 +176,13 @@ internal sealed class ArmorGemAutoLoader : ModSystem
                         {
                             if (color.A > 0)
                             {
-                                averageRed += color.R * color.R / (255f * 255f);
-                                averageGreen += color.G * color.G / (255f * 255f);
-                                averageBlue += color.B * color.B / (255f * 255f);
+                                // Weird way to average colors.
+                                // Calculating the average of square roots...
+                                // ...and then use the square root of the average for a brighter result.
+                                // Not the best way, but I'm not sure what else to do.
+                                averageRed += MathF.Sqrt(color.R / 255f);
+                                averageGreen += MathF.Sqrt(color.G / 255f);
+                                averageBlue += MathF.Sqrt(color.B / 255f);
                                 colorCount++;
                             }
                         }
@@ -194,7 +207,6 @@ internal sealed class ArmorGemAutoLoader : ModSystem
     private string CaptureSetBonus(On_Language.orig_GetTextValue_string orig, string key)
     {
         CapturedSetBonusKey = key;
-        CapturedSetBonusArg0 = null;
         return orig(key);
     }
 
