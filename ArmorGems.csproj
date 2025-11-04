@@ -2,6 +2,16 @@
 
 	<!-- Import tModLoader mod properties -->
 	<Import Project="..\tModLoader.targets" />
+	<ItemGroup>
+	  <AdditionalFiles Remove="Content\NewFolder1\**" />
+	  <AdditionalFiles Remove="Content\NewFolder\**" />
+	  <Compile Remove="Content\NewFolder1\**" />
+	  <Compile Remove="Content\NewFolder\**" />
+	  <EmbeddedResource Remove="Content\NewFolder1\**" />
+	  <EmbeddedResource Remove="Content\NewFolder\**" />
+	  <None Remove="Content\NewFolder1\**" />
+	  <None Remove="Content\NewFolder\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="all" ExcludeAssets="runtime" />
@@ -9,11 +19,6 @@
 	
 	<ItemGroup Label="Publicized assemblies">
 		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Content\NewFolder1\" />
-	  <Folder Include="Content\NewFolder\" />
 	</ItemGroup>
 
 </Project>

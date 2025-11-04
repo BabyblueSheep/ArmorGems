@@ -1,5 +1,6 @@
 ﻿using Microsoft.Build.Framework;
 using MonoMod.RuntimeDetour;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace ArmorGems.Content
 {
@@ -25,33 +27,53 @@ namespace ArmorGems.Content
         }
         
         public static void ResizeArraysAndGetArmorSetShit(orig_ResizeArrays orig, bool unloading)
-        { 
+        {
+            List<int> helmets = new();
+            List<int> chestplates = new();
+            List<int> leggings = new();
+
             for (int i = ItemID.Count; i < ItemLoader.ItemCount; i++)
             {
-                ModItem item1 = ItemLoader.GetItem(i);
-                Item bodySlot = new();
-                Item legSlot = new();
-                bool isSet = false;
-
-                for (int j = ItemID.Count; j < ItemLoader.ItemCount; j++)
+                ModItem item = ItemLoader.GetItem(i);
+                AutoloadEquip equip = item.GetType().GetAttribute<AutoloadEquip>();
+                if (equip != null)
                 {
-                    ModItem item2 = ItemLoader.GetItem(j);
-                    for (int k = ItemID.Count; k < ItemLoader.ItemCount; k++)
+                    EquipType[] equipTypes = equip.equipTypes;
+                    foreach (EquipType equipe in equipTypes)
                     {
-                        ModItem item3 = ItemLoader.GetItem(k);
-
-                        if (item1.IsArmorSet(item1.Item, item2.Item, item3.Item))
+                        if (equipe == EquipType.Head)
                         {
-                            bodySlot = item2.Item;
-                            legSlot = item3.Item;
-                            isSet = true;
+                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as helmet");
+                            helmets.Add(item.Type);
+                        }
+                        if (equipe == EquipType.Body)
+                        {
+                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as chestplate");
+                            chestplates.Add(item.Type);
+                        }
+                        if (equipe == EquipType.Legs)
+                        {
+                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as leggings");
+                            leggings.Add(item.Type);
                         }
                     }
                 }
+            }
+            ArmorGems.instance.Logger.Info("\n");
 
-                if (isSet)
+            for (int i = 0; i < helmets.Count; i++)
+            {
+                ModItem helmet = ItemLoader.GetItem(helmets[i]);
+                for (int j = 0; j < chestplates.Count; j++)
                 {
-                    ArmorGems.instance.Logger.Info("Armor Set: " + item1.Name + " " + bodySlot.ModItem.Name + " " + legSlot.ModItem.Name + "\n");
+                    for (int k = 0; k < leggings.Count; k++)
+                    {
+                        if (helmet.IsArmorSet(helmet.Item, ItemLoader.GetItem(chestplates[j]).Item, ItemLoader.GetItem(leggings[k]).Item))
+                        {
+                            ArmorGems.instance.Logger.Info("Armor Set: " + helmet.Name + " " + ItemLoader.GetItem(chestplates[j]).Name + " " + ItemLoader.GetItem(leggings[k]).Name);
+                            break;
+                        }
+                    }
                 }
             }
 
