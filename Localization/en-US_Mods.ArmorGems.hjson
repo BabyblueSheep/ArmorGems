@@ -1,2 +1,589 @@
-# There's no space before Gem because there should very likely be a space from fetching the common substring of armor pieces
-Items.GemDisplayName: "{0}Armor Gem"
+Items: {
+	# There's no space before Gem because there should very likely be a space from fetching the common substring of armor pieces
+	GemDisplayName: "{0}Armor Gem"
+
+	"FlightMask Armor Gem": {
+		DisplayName: Flight Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"YewWoodHelmet Armor Gem": {
+		DisplayName: Yew Wood Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CriersCap Armor Gem": {
+		DisplayName: Criers Cap  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CyberPunkHeadset Armor Gem": {
+		DisplayName: Cyber Punk Headset  Armor  Gem
+		Tooltip: ""
+	}
+
+	"JestersMask Armor Gem": {
+		DisplayName: Jesters Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"JestersMask2 Armor Gem": {
+		DisplayName: Jesters Mask2  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MaestroWig Armor Gem": {
+		DisplayName: Maestro Wig  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MarchingBandShako Armor Gem": {
+		DisplayName: Marching Band Shako  Armor  Gem
+		Tooltip: ""
+	}
+
+	"NoblesHat Armor Gem": {
+		DisplayName: Nobles Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"OrnateHat Armor Gem": {
+		DisplayName: Ornate Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ShootingStarHat Armor Gem": {
+		DisplayName: Shooting Star Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"WhisperingHood Armor Gem": {
+		DisplayName: Whispering Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LichCowl Armor Gem": {
+		DisplayName: Lich Cowl  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TideTurnerHelmet Armor Gem": {
+		DisplayName: Tide Turner Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DreamWeaversHelmet Armor Gem": {
+		DisplayName: Dream Weavers Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MasterArbalestHood Armor Gem": {
+		DisplayName: Master Arbalest Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"InspiratorsHelmet Armor Gem": {
+		DisplayName: Inspirators Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MagmaSeersMask Armor Gem": {
+		DisplayName: Magma Seers Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BronzeHelmet Armor Gem": {
+		DisplayName: Bronze Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CoralHelmet Armor Gem": {
+		DisplayName: Coral Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DarksteelFaceGuard Armor Gem": {
+		DisplayName: Darksteel Face Guard  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DemonBloodHelmet Armor Gem": {
+		DisplayName: Demon Blood Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DepthDiverHelmet Armor Gem": {
+		DisplayName: Depth Diver Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"NagaSkinMask Armor Gem": {
+		DisplayName: Naga Skin Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TideHunterCap Armor Gem": {
+		DisplayName: Tide Hunter Cap  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AceHelmet Armor Gem": {
+		DisplayName: Ace Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ProspectorHeadgear Armor Gem": {
+		DisplayName: Prospector Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FeralFurHead Armor Gem": {
+		DisplayName: Feral Fur Head  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DragonMask Armor Gem": {
+		DisplayName: Dragon Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DreadSkull Armor Gem": {
+		DisplayName: Dread Skull  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SilkHat Armor Gem": {
+		DisplayName: Silk Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FleshMask Armor Gem": {
+		DisplayName: Flesh Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"GeodeHelmet Armor Gem": {
+		DisplayName: Geode Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"GraniteHelmet Armor Gem": {
+		DisplayName: Granite Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BioTechHood Armor Gem": {
+		DisplayName: Bio Tech Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BloomingCrown Armor Gem": {
+		DisplayName: Blooming Crown  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CelestialCrown Armor Gem": {
+		DisplayName: Celestial Crown  Armor  Gem
+		Tooltip: ""
+	}
+
+	"EbonHood Armor Gem": {
+		DisplayName: Ebon Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FallenPaladinFaceguard Armor Gem": {
+		DisplayName: Fallen Paladin Faceguard  Armor  Gem
+		Tooltip: ""
+	}
+
+	"IridescentHelmet Armor Gem": {
+		DisplayName: Iridescent Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LifeBinderMask Armor Gem": {
+		DisplayName: Life Binder Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"NoviceClericCowl Armor Gem": {
+		DisplayName: Novice Cleric Cowl  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SacredHelmet Armor Gem": {
+		DisplayName: Sacred Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TemplarsCirclet Armor Gem": {
+		DisplayName: Templars Circlet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"WarlockHood Armor Gem": {
+		DisplayName: Warlock Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"IcyHeadgear Armor Gem": {
+		DisplayName: Icy Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"IllumiteMask Armor Gem": {
+		DisplayName: Illumite Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LodeStoneFaceGuard Armor Gem": {
+		DisplayName: Lode Stone Face Guard  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CryomancersCrown Armor Gem": {
+		DisplayName: Cryomancers Crown  Armor  Gem
+		Tooltip: ""
+	}
+
+	"WhiteKnightMask Armor Gem": {
+		DisplayName: White Knight Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ConduitHelmet Armor Gem": {
+		DisplayName: Conduit Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SandStoneHelmet Armor Gem": {
+		DisplayName: Sand Stone Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DurasteelHelmet Armor Gem": {
+		DisplayName: Durasteel Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SteelHelmet Armor Gem": {
+		DisplayName: Steel Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AstroHelmet Armor Gem": {
+		DisplayName: Astro Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LifeBloomMask Armor Gem": {
+		DisplayName: Life Bloom Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LivingWoodMask Armor Gem": {
+		DisplayName: Living Wood Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SpiritTrapperCowl Armor Gem": {
+		DisplayName: Spirit Trapper Cowl  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TerrariumHelmet Armor Gem": {
+		DisplayName: Terrarium Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ThoriumHelmet Armor Gem": {
+		DisplayName: Thorium Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FungusHat Armor Gem": {
+		DisplayName: Fungus Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"PlagueDoctorsMask Armor Gem": {
+		DisplayName: Plague Doctors Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ShadeMasterMask Armor Gem": {
+		DisplayName: Shade Master Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"WhiteDwarfMask Armor Gem": {
+		DisplayName: White Dwarf Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TitanHeadgear Armor Gem": {
+		DisplayName: Titan Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MalignantCap Armor Gem": {
+		DisplayName: Malignant Cap  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ValadiumHelmet Armor Gem": {
+		DisplayName: Valadium Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BlueKnightHelmet Armor Gem": {
+		DisplayName: Blue Knight Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ChunkyHelmet Armor Gem": {
+		DisplayName: Chunky Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CausticHeadgear Armor Gem": {
+		DisplayName: Caustic Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LegendaryHelmet Armor Gem": {
+		DisplayName: Legendary Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LightAutomatonMask Armor Gem": {
+		DisplayName: Light Automaton Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MaroonMageHat Armor Gem": {
+		DisplayName: Maroon Mage Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SpaceDwarfHeadset Armor Gem": {
+		DisplayName: Space Dwarf Headset  Armor  Gem
+		Tooltip: ""
+	}
+
+	"Sunhat Armor Gem": {
+		DisplayName: Sunhat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"GlitteringHelmet Armor Gem": {
+		DisplayName: Glittering Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AerospecHat Armor Gem": {
+		DisplayName: Aerospec Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AstralHelm Armor Gem": {
+		DisplayName: Astral Helm  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AuricTeslaHoodedFacemask Armor Gem": {
+		DisplayName: Auric Tesla Hooded Facemask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BloodflareHeadMagic Armor Gem": {
+		DisplayName: Bloodflare Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BrimflameScowl Armor Gem": {
+		DisplayName: Brimflame Scowl  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DaedalusHeadMagic Armor Gem": {
+		DisplayName: Daedalus Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DemonshadeHelm Armor Gem": {
+		DisplayName: Demonshade Helm  Armor  Gem
+		Tooltip: ""
+	}
+
+	"DesertProwlerHat Armor Gem": {
+		DisplayName: Desert Prowler Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"EmpyreanMask Armor Gem": {
+		DisplayName: Empyrean Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FathomSwarmerVisage Armor Gem": {
+		DisplayName: Fathom Swarmer Visage  Armor  Gem
+		Tooltip: ""
+	}
+
+	"FearmongerGreathelm Armor Gem": {
+		DisplayName: Fearmonger Greathelm  Armor  Gem
+		Tooltip: ""
+	}
+
+	"GemTechHeadgear Armor Gem": {
+		DisplayName: Gem Tech Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"GodSlayerHeadMelee Armor Gem": {
+		DisplayName: God Slayer Head Melee  Armor  Gem
+		Tooltip: ""
+	}
+
+	"HydrothermicHeadMagic Armor Gem": {
+		DisplayName: Hydrothermic Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"LunicCorpsHelmet Armor Gem": {
+		DisplayName: Lunic Corps Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MarniteArchitectHeadgear Armor Gem": {
+		DisplayName: Marnite Architect Headgear  Armor  Gem
+		Tooltip: ""
+	}
+
+	"MolluskShellmet Armor Gem": {
+		DisplayName: Mollusk Shellmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"OmegaBlueHelmet Armor Gem": {
+		DisplayName: Omega Blue Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"PlaguebringerVisor Armor Gem": {
+		DisplayName: Plaguebringer Visor  Armor  Gem
+		Tooltip: ""
+	}
+
+	"PlagueReaperMask Armor Gem": {
+		DisplayName: Plague Reaper Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"PrismaticHelmet Armor Gem": {
+		DisplayName: Prismatic Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ReaverHeadExplore Armor Gem": {
+		DisplayName: Reaver Head Explore  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SilvaHeadMagic Armor Gem": {
+		DisplayName: Silva Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SnowRuffianMask Armor Gem": {
+		DisplayName: Snow Ruffian Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"StatigelHeadMagic Armor Gem": {
+		DisplayName: Statigel Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SulphurousHelmet Armor Gem": {
+		DisplayName: Sulphurous Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TarragonHeadMagic Armor Gem": {
+		DisplayName: Tarragon Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TitanHeartMask Armor Gem": {
+		DisplayName: Titan Heart Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"UmbraphileHood Armor Gem": {
+		DisplayName: Umbraphile Hood  Armor  Gem
+		Tooltip: ""
+	}
+
+	"AncientGodSlayerHelm Armor Gem": {
+		DisplayName: Ancient God Slayer Helm  Armor  Gem
+		Tooltip: ""
+	}
+
+	"VictideHeadMagic Armor Gem": {
+		DisplayName: Victide Head Magic  Armor  Gem
+		Tooltip: ""
+	}
+
+	"WulfrumHat Armor Gem": {
+		DisplayName: Wulfrum Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"BananaClownHat Armor Gem": {
+		DisplayName: Banana Clown Hat  Armor  Gem
+		Tooltip: ""
+	}
+
+	"CarnelianWoodHelmet Armor Gem": {
+		DisplayName: Carnelian Wood Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ChloriumConehead Armor Gem": {
+		DisplayName: Chlorium Conehead  Armor  Gem
+		Tooltip: ""
+	}
+
+	"ElementalHelmet Armor Gem": {
+		DisplayName: Elemental Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SalvageMask Armor Gem": {
+		DisplayName: Salvage Mask  Armor  Gem
+		Tooltip: ""
+	}
+
+	"SealedHelmet Armor Gem": {
+		DisplayName: Sealed Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"TwistedNetheriteHelmet Armor Gem": {
+		DisplayName: Twisted Netherite Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"VoidHelmet Armor Gem": {
+		DisplayName: Void Helmet  Armor  Gem
+		Tooltip: ""
+	}
+
+	"YellowLightHelmet Armor Gem": {
+		DisplayName: Yellow Light Helmet  Armor  Gem
+		Tooltip: ""
+	}
+}
