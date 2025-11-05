@@ -31,6 +31,7 @@ namespace ArmorGems.Content
             List<int> helmets = new();
             List<int> chestplates = new();
             List<int> leggings = new();
+            List<ArmorSet> armorSets = new();
 
             for (int i = ItemID.Count; i < ItemLoader.ItemCount; i++)
             {
@@ -43,23 +44,22 @@ namespace ArmorGems.Content
                     {
                         if (equipe == EquipType.Head)
                         {
-                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as helmet");
+                            //ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as helmet");
                             helmets.Add(item.Type);
                         }
                         if (equipe == EquipType.Body)
                         {
-                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as chestplate");
+                            //ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as chestplate");
                             chestplates.Add(item.Type);
                         }
                         if (equipe == EquipType.Legs)
                         {
-                            ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as leggings");
+                            //ArmorGems.instance.Logger.Info("item loaded: " + item.Name + " as leggings");
                             leggings.Add(item.Type);
                         }
                     }
                 }
             }
-            ArmorGems.instance.Logger.Info("\n");
 
             for (int i = 0; i < helmets.Count; i++)
             {
@@ -70,14 +70,68 @@ namespace ArmorGems.Content
                     {
                         if (helmet.IsArmorSet(helmet.Item, ItemLoader.GetItem(chestplates[j]).Item, ItemLoader.GetItem(leggings[k]).Item))
                         {
-                            ArmorGems.instance.Logger.Info("Armor Set: " + helmet.Name + " " + ItemLoader.GetItem(chestplates[j]).Name + " " + ItemLoader.GetItem(leggings[k]).Name);
+                            // cull duplicate sets into one
+                            bool addSet = true;
+                            foreach (ArmorSet set in armorSets)
+                            {
+                                if (set.helmets[0] != helmet && set.chestplates[0] == ItemLoader.GetItem(chestplates[j]) && set.leggings[0] == ItemLoader.GetItem(leggings[k]))
+                                {
+                                    set.helmets.Add(helmet);
+                                    addSet = false;
+                                }
+                                else if (set.helmets[0] == helmet && set.chestplates[0] != ItemLoader.GetItem(chestplates[j]) && set.leggings[0] == ItemLoader.GetItem(leggings[k]))
+                                {
+                                    set.chestplates.Add(ItemLoader.GetItem(chestplates[j]));
+                                    addSet = false;
+                                }
+                                else if (set.helmets[0] == helmet && set.chestplates[0] == ItemLoader.GetItem(chestplates[j]) && set.leggings[0] != ItemLoader.GetItem(leggings[k]))
+                                {
+                                    set.leggings.Add(ItemLoader.GetItem(leggings[k]));
+                                    addSet = false;
+                                }
+                            }
+                            
+                            if (addSet)
+                            {
+                                ArmorGems.instance.Logger.Info("Armor Set: " + helmet.Name + " " + ItemLoader.GetItem(chestplates[j]).Name + " " + ItemLoader.GetItem(leggings[k]).Name);
+                                armorSets.Add(new ArmorSet(helmet, ItemLoader.GetItem(chestplates[j]), ItemLoader.GetItem(leggings[k])));
+                            }
                             break;
                         }
                     }
                 }
             }
 
+            ArmorGems.instance.Logger.Info("auric helmets:");
+            foreach (ModItem helmet in armorSets[2].helmets)
+            {
+                ArmorGems.instance.Logger.Info(helmet.Name);
+            }
+
             orig(unloading);
+        }
+
+        private struct ArmorSet
+        {
+            public List<ModItem> helmets;
+            public List<ModItem> chestplates;
+            public List<ModItem> leggings;
+
+            #region Constructors
+            public ArmorSet (List<ModItem> helmets, List<ModItem> chestplates, List<ModItem> leggings)
+            {
+                this.helmets = helmets;
+                this.chestplates = chestplates;
+                this.leggings = leggings;
+            }
+
+            public ArmorSet(ModItem helmets, ModItem chestplates, ModItem leggings)
+            {
+                this.helmets = new List<ModItem> { helmets };
+                this.chestplates = new List<ModItem> { chestplates };
+                this.leggings = new List<ModItem> { leggings };
+            }
+            #endregion
         }
     }
 }
