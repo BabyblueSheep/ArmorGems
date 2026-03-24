@@ -42,6 +42,9 @@ internal sealed class ArmorSetDetector : ILoadable
 
     private void DetectArmorSets(orig_ResizeArrays orig, bool unloading)
     {
+        orig(unloading);
+        return;
+
         if (unloading)
         {
             orig(unloading);
