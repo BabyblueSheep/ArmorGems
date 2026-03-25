@@ -22,3 +22,11 @@ NPCs: {
 		}
 	}
 }
+
+Items: {
+	BaseArmorGem: {
+		DisplayName: Base Armor Gem
+		Tooltip: ""
+		DisplayNameWithSet: "{0} Gem"
+	}
+}

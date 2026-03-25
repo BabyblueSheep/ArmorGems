@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Mono.Cecil;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +18,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using static ArmorGems.BaseArmorGem;
 
 namespace ArmorGems;
 
@@ -53,6 +56,9 @@ internal sealed class EnchanterNPC : ModNPC
         }
     }
 
+    private static Player _dummyPlayer;
+    private static Item _dummyItem;
+    
     public int NPCHeadShimmerTextureSlot { get; private set; }
 
     public override string Texture => "ArmorGems/Assets/EnchanterNPC";
@@ -154,7 +160,72 @@ internal sealed class EnchanterNPC : ModNPC
     {
         if (firstButton)
         {
-            
+            _dummyPlayer ??= new Player();
+            _dummyItem ??= new Item();
+
+            var helmetItem = Main.LocalPlayer.armor[0];
+            var chestplateItem = Main.LocalPlayer.armor[1];
+            var leggingsItem = Main.LocalPlayer.armor[2];
+
+            var hasSetBonus = false;
+
+            void CheckForSetBonus()
+            {
+                hasSetBonus = false;
+                _dummyPlayer.head = _dummyPlayer.armor[0].headSlot;
+                _dummyPlayer.body = _dummyPlayer.armor[1].bodySlot;
+                _dummyPlayer.legs = _dummyPlayer.armor[2].legSlot;
+
+                _dummyPlayer.UpdateArmorSets(0);
+
+                if (_dummyPlayer.setBonus != "")
+                    hasSetBonus = true;
+            }
+
+            void TryGiveArmorGem(bool checkHelmet, bool checkChestplate, bool checkLeggings)
+            {
+                _dummyPlayer.armor[0] = checkHelmet ? helmetItem : _dummyItem;
+                _dummyPlayer.armor[1] = checkChestplate ? chestplateItem : _dummyItem;
+                _dummyPlayer.armor[2] = checkLeggings ? leggingsItem : _dummyItem;
+                CheckForSetBonus();
+                if (hasSetBonus)
+                {
+                    int itemToSpawn = Item.NewItem
+                    (
+                        new EntitySource_ArmorGemEnchantment
+                        (
+                            NPC,
+                            checkHelmet ? helmetItem : _dummyItem.Clone(),
+                            checkChestplate ? chestplateItem : _dummyItem.Clone(),
+                            checkLeggings ? leggingsItem : _dummyItem.Clone()
+                        ),
+                        Main.LocalPlayer.position, Main.LocalPlayer.Size,
+                        ModContent.ItemType<BaseArmorGem>(),
+                        noGrabDelay: true
+                    );
+
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemToSpawn, 1f);
+
+                    Main.npcChatText = "IT WORKED!";
+                    SoundEngine.PlaySound(SoundID.AchievementComplete, NPC.Center);
+                }
+            }
+
+            TryGiveArmorGem(true, true, false);
+            if (hasSetBonus)
+                return;
+            TryGiveArmorGem(true, false, true);
+            if (hasSetBonus)
+                return;
+            TryGiveArmorGem(false, true, true);
+            if (hasSetBonus)
+                return;
+            TryGiveArmorGem(true, true, true);
+            if (hasSetBonus)
+                return;
+
+            Main.npcChatText = "no fuck you";
         }
     }
 
@@ -162,7 +233,7 @@ internal sealed class EnchanterNPC : ModNPC
 
     public override void SetDefaults()
     {
-        (NPC.width, NPC.height) = (40, 18);
+        (NPC.width, NPC.height) = (18, 40);
 
         NPC.lifeMax = 250;
         NPC.damage = 10;
