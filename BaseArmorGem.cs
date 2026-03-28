@@ -5,6 +5,7 @@ using System.Text;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -51,9 +52,9 @@ internal sealed class BaseArmorGem : ModItem
     {
         if (source is EntitySource_ArmorGemEnchantment armorGemSource)
         {
-            HeadArmorItem = armorGemSource.HeadArmorItem;
-            BodyArmorItem = armorGemSource.BodyArmorItem;
-            LegsArmorItem = armorGemSource.LegsArmorItem;
+            HeadArmorItem = armorGemSource.HeadArmorItem.Clone();
+            BodyArmorItem = armorGemSource.BodyArmorItem.Clone();
+            LegsArmorItem = armorGemSource.LegsArmorItem.Clone();
 
             RefreshFieldsDerivedFromArmorSet();
         }
@@ -183,6 +184,21 @@ internal sealed class BaseArmorGem : ModItem
         player.head = player.armor[0].headSlot;
         player.body = player.armor[1].bodySlot;
         player.legs = player.armor[2].legSlot;
+
+
+
+        //See SpecificArmorFixes.cs for details.
+        var isChlorophyte = (HeadArmorItem.type == ItemID.ChlorophyteMask || HeadArmorItem.type == ItemID.ChlorophyteHelmet || HeadArmorItem.type == ItemID.ChlorophyteHeadgear)
+            && BodyArmorItem.type == ItemID.ChlorophytePlateMail && LegsArmorItem.type == ItemID.ChlorophyteGreaves;
+        if (isChlorophyte)
+        {
+            player.GetModPlayer<ArmorGemSpecificFixesModPlayer>().HasChlorophyte = true;
+        }
+        var isSolar = HeadArmorItem.type == ItemID.SolarFlareHelmet && BodyArmorItem.type == ItemID.SolarFlareBreastplate && LegsArmorItem.type == ItemID.SolarFlareLeggings;
+        if (isSolar)
+        {
+            player.GetModPlayer<ArmorGemSpecificFixesModPlayer>().HasSolar = true;
+        }
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
