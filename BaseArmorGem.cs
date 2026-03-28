@@ -127,10 +127,6 @@ internal sealed class BaseArmorGem : ModItem
                 {
                     if (color.A > 0)
                     {
-                        //Weird way to average colors.
-                        //Calculating the average of square roots...
-                        //...and then use the square root of the average for a brighter result.
-                        //Not the best way, but I'm not sure what else to do.
                         averageRed += MathF.Sqrt(color.R / 255f);
                         averageGreen += MathF.Sqrt(color.G / 255f);
                         averageBlue += MathF.Sqrt(color.B / 255f);
@@ -144,7 +140,7 @@ internal sealed class BaseArmorGem : ModItem
 
                 var averageColorHsl = Main.rgbToHsl(new Color(averageRed, averageGreen, averageBlue));
                 averageColorHsl.Y = float.Min(1f, averageColorHsl.Y + 0.5f);
-                averageColorHsl.Z = float.Min(1f, averageColorHsl.Z + 0.25f);
+                averageColorHsl.Z = float.Min(1f, averageColorHsl.Z + 0.1f);
                 var averageColor = Main.hslToRgb(averageColorHsl);
 
                 Item.color = averageColor;
