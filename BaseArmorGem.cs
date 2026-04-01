@@ -11,8 +11,10 @@ using Terraria.ModLoader.IO;
 
 namespace ArmorGems;
 
-internal sealed class BaseArmorGem : ModItem
+internal abstract class BaseArmorGem : ModItem
 {
+    public abstract string NameKey { get; }
+
     internal sealed class EntitySource_ArmorGemEnchantment : EntitySource_Parent
     {
         public Item HeadArmorItem { get; set; }
@@ -31,7 +33,7 @@ internal sealed class BaseArmorGem : ModItem
     public Item BodyArmorItem { get; set; }
     public Item LegsArmorItem { get; set; }
 
-    private static Player _dummyPlayer = new Player();
+    private static readonly Player _dummyPlayer = new Player();
 
     private string _commonItemPrefix = "";
     private string _setBonusText = "";
@@ -88,7 +90,7 @@ internal sealed class BaseArmorGem : ModItem
             _commonItemPrefix = bodyName.Split(' ')[0];
         }
 
-        Item.SetNameOverride(Mod.GetLocalization("Items.BaseArmorGem.DisplayNameWithSet").WithFormatArgs(_commonItemPrefix).Value);
+        Item.SetNameOverride(Mod.GetLocalization($"Items.BaseArmorGem.{NameKey}").WithFormatArgs(_commonItemPrefix).Value);
         #endregion
 
         #region Item description
@@ -217,4 +219,77 @@ internal sealed class BaseArmorGem : ModItem
 
         RefreshFieldsDerivedFromArmorSet();
     }
+}
+
+internal sealed class AwkwardArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameAwkward";
+}
+internal sealed class MundaneArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameMundane";
+}
+internal sealed class ThickArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameThick";
+}
+
+internal sealed class CrackedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameCracked";
+}
+internal sealed class ChippedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameChipped";
+}
+internal sealed class PolishedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNamePolished";
+}
+internal sealed class ShinyArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameShiny";
+}
+internal sealed class DullArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameDull";
+}
+
+internal sealed class PrehistoricArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNamePrehistoric";
+}
+internal sealed class AncientArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameAncient";
+}
+internal sealed class ModernArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameModern";
+}
+internal sealed class FuturisticArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameFuturistic";
+}
+
+internal sealed class CursedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameCursed";
+}
+internal sealed class BlessedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameBlessed";
+}
+
+internal sealed class GoodArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameGood";
+}
+internal sealed class NeutralArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameNeutral";
+}
+internal sealed class BadArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameBad";
 }

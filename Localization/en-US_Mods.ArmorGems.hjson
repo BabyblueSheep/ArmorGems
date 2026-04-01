@@ -53,6 +53,37 @@ Items: {
 	BaseArmorGem: {
 		DisplayName: Base Armor Gem
 		Tooltip: ""
-		DisplayNameWithSet: "{0} Gem"
+		DisplayNameAwkward: Awkward {0} Gem
+		DisplayNameMundane: Mundane {0} Gem
+		DisplayNameThick: Thick {0} Gem
+		DisplayNameCracked: Cracked {0} Gem
+		DisplayNameChipped: Chipped {0} Gem
+		DisplayNamePolished: Polished {0} Gem
+		DisplayNameShiny: Shiny {0} Gem
+		DisplayNameDull: Dull {0} Gem
+		DisplayNamePrehistoric: Prehistoric {0} Gem
+		DisplayNameAncient: Ancient {0} Gem
+		DisplayNameModern: Modern {0} Gem
+		DisplayNameFuturistic: Futuristic {0} Gem
+		DisplayNameCursed: Cursed {0} Gem
+		DisplayNameBlessed: Blessed {0} Gem
+		DisplayNameGood: Good {0} Gem
+		DisplayNameNeutral: Neutral {0} Gem
+		DisplayNameBad: Bad {0} Gem
+	}
+
+	AwkwardArmorGem: {
+		DisplayName: Awkward Armor Gem
+		Tooltip: ""
+	}
+
+	MundaneArmorGem: {
+		DisplayName: Mundane Armor Gem
+		Tooltip: ""
+	}
+
+	ThickArmorGem: {
+		DisplayName: Thick Armor Gem
+		Tooltip: ""
 	}
 }

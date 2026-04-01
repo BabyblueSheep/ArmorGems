@@ -96,6 +96,8 @@ internal sealed class EnchanterNPC : ModNPC
     
     public int NPCHeadShimmerTextureSlot { get; private set; }
 
+    public static List<int> ArmorGemIds { get; private set; }
+
     public override string Texture => "ArmorGems/Assets/EnchanterNPC";
 
     public override void Load()
@@ -164,6 +166,31 @@ internal sealed class EnchanterNPC : ModNPC
             .SetNPCAffection(NPCID.Princess, AffectionLevel.Hate);
 
         ContentSamples.NpcBestiaryRarityStars[Type] = 3;
+
+        ArmorGemIds =
+        [
+            ModContent.ItemType<AwkwardArmorGem>(),
+            ModContent.ItemType<MundaneArmorGem>(),
+            ModContent.ItemType<ThickArmorGem>(),
+
+            ModContent.ItemType<CrackedArmorGem>(),
+            ModContent.ItemType<ChippedArmorGem>(),
+            ModContent.ItemType<PolishedArmorGem>(),
+            ModContent.ItemType<ShinyArmorGem>(),
+            ModContent.ItemType<DullArmorGem>(),
+
+            ModContent.ItemType<PrehistoricArmorGem>(),
+            ModContent.ItemType<AncientArmorGem>(),
+            ModContent.ItemType<ModernArmorGem>(),
+            ModContent.ItemType<FuturisticArmorGem>(),
+
+            ModContent.ItemType<CursedArmorGem>(),
+            ModContent.ItemType<BlessedArmorGem>(),
+
+            ModContent.ItemType<GoodArmorGem>(),
+            ModContent.ItemType<NeutralArmorGem>(),
+            ModContent.ItemType<BadArmorGem>(),
+        ];
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -215,7 +242,7 @@ internal sealed class EnchanterNPC : ModNPC
     {
         if (firstButton)
         {
-            if (Main.LocalPlayer.GetModPlayer<CanOnlyEnchantOncePerDayModPlayer>().EnchantedThisDay)
+            if (Main.LocalPlayer.GetModPlayer<CanOnlyEnchantOncePerDayModPlayer>().EnchantedThisDay && !Main.LocalPlayer.creativeGodMode)
             {
                 Main.npcChatText = Main.rand.NextFromList
                 (
@@ -266,7 +293,7 @@ internal sealed class EnchanterNPC : ModNPC
                             checkLeggings ? leggingsItem : _dummyItem.Clone()
                         ),
                         Main.LocalPlayer.position, Main.LocalPlayer.Size,
-                        ModContent.ItemType<BaseArmorGem>(),
+                        Main.rand.NextFromCollection(ArmorGemIds),
                         noGrabDelay: true
                     );
 
