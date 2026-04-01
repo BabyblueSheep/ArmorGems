@@ -190,6 +190,11 @@ internal sealed class EnchanterNPC : ModNPC
             ModContent.ItemType<GoodArmorGem>(),
             ModContent.ItemType<NeutralArmorGem>(),
             ModContent.ItemType<BadArmorGem>(),
+
+            ModContent.ItemType<GoldenArmorGem>(),
+
+            ModContent.ItemType<BasicArmorGem>(),
+            ModContent.ItemType<AdvancedArmorGem>(),
         ];
     }
 

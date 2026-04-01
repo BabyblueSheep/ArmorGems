@@ -293,3 +293,17 @@ internal sealed class BadArmorGem : BaseArmorGem
 {
     public override string NameKey => "DisplayNameBad";
 }
+
+internal sealed class GoldenArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameGolden";
+}
+
+internal sealed class BasicArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameBasic";
+}
+internal sealed class AdvancedArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameAdvanced";
+}

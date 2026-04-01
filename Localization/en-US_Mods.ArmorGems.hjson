@@ -70,6 +70,9 @@ Items: {
 		DisplayNameGood: Good {0} Gem
 		DisplayNameNeutral: Neutral {0} Gem
 		DisplayNameBad: Bad {0} Gem
+		DisplayNameGolden: Golden {0} Gem
+		DisplayNameBasic: Basic {0} Gem
+		DisplayNameAdvanced: Advanced {0} Gem
 	}
 
 	AwkwardArmorGem: {
