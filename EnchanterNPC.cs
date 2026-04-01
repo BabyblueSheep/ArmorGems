@@ -55,6 +55,41 @@ internal sealed class EnchanterNPC : ModNPC
             CanEnchanterRespawn = canEnchanterRespawnCopy;
         }
     }
+    
+    internal sealed class CanOnlyEnchantOncePerDayModPlayer : ModPlayer
+    {
+        public bool EnchantedThisDay { get; set; } = false;
+
+        public override void Load()
+        {
+            On_Main.UpdateTime_StartDay += ResetEnchantedThisDay;
+        }
+
+        public override void Unload()
+        {
+            On_Main.UpdateTime_StartDay -= ResetEnchantedThisDay;
+        }
+
+        private void ResetEnchantedThisDay(On_Main.orig_UpdateTime_StartDay orig, ref bool stopEvents)
+        {
+            foreach (var player in Main.ActivePlayers)
+            {
+                player.GetModPlayer<CanOnlyEnchantOncePerDayModPlayer>().EnchantedThisDay = false;
+            }
+
+            orig(ref stopEvents);
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag[nameof(EnchantedThisDay)] = EnchantedThisDay;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            EnchantedThisDay = tag.GetBool(nameof(EnchantedThisDay));
+        }
+    }
 
     private static Player _dummyPlayer;
     private static Item _dummyItem;
@@ -100,10 +135,10 @@ internal sealed class EnchanterNPC : ModNPC
         NPCID.Sets.ExtraFramesCount[Type] = 9;
         NPCID.Sets.AttackFrameCount[Type] = 4;
 
-        NPCID.Sets.DangerDetectRange[Type] = 700;
+        NPCID.Sets.DangerDetectRange[Type] = 320;
         NPCID.Sets.PrettySafe[Type] = 100;
-        NPCID.Sets.AttackType[Type] = 2;
-        NPCID.Sets.AttackTime[Type] = 30;
+        NPCID.Sets.AttackType[Type] = 0;
+        NPCID.Sets.AttackTime[Type] = 34;
         NPCID.Sets.AttackAverageChance[Type] = 30;
 
         NPCID.Sets.HatOffsetY[Type] = 2;
@@ -115,7 +150,6 @@ internal sealed class EnchanterNPC : ModNPC
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new()
         {
             Velocity = 1f,
-            PortraitPositionXOverride = 1,
         });
 
         NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
@@ -151,8 +185,13 @@ internal sealed class EnchanterNPC : ModNPC
     public override List<string> SetNPCNameList()
     {
         return [
-            this.GetLocalizedValue("Names.Devvy"),
             this.GetLocalizedValue("Names.Misty"),
+            this.GetLocalizedValue("Names.Carousel"),
+            this.GetLocalizedValue("Names.Magicad"),
+            this.GetLocalizedValue("Names.Glorks"),
+            this.GetLocalizedValue("Names.Finellie"),
+            this.GetLocalizedValue("Names.Jarlsova"),
+            this.GetLocalizedValue("Names.Michelangela"),
         ];
     }
 
@@ -176,6 +215,17 @@ internal sealed class EnchanterNPC : ModNPC
     {
         if (firstButton)
         {
+            if (Main.LocalPlayer.GetModPlayer<CanOnlyEnchantOncePerDayModPlayer>().EnchantedThisDay)
+            {
+                Main.npcChatText = Main.rand.NextFromList
+                (
+                    this.GetLocalizedValue("Chat.EnchantTomorrow1"),
+                    this.GetLocalizedValue("Chat.EnchantTomorrow2")
+                );
+
+                return;
+            }
+
             _dummyPlayer ??= new Player();
             _dummyItem ??= new Item();
 
@@ -223,8 +273,14 @@ internal sealed class EnchanterNPC : ModNPC
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemToSpawn, 1f);
 
-                    Main.npcChatText = "IT WORKED!";
+                    Main.npcChatText = Main.rand.NextFromList
+                    (
+                        this.GetLocalizedValue("Chat.EnchantSuccess1"),
+                        this.GetLocalizedValue("Chat.EnchantSuccess2")
+                    );
                     SoundEngine.PlaySound(SoundID.AchievementComplete, NPC.Center);
+
+                    Main.LocalPlayer.GetModPlayer<CanOnlyEnchantOncePerDayModPlayer>().EnchantedThisDay = true;
                 }
             }
 
@@ -241,7 +297,12 @@ internal sealed class EnchanterNPC : ModNPC
             if (hasSetBonus)
                 return;
 
-            Main.npcChatText = "no fuck you";
+            Main.npcChatText = Main.rand.NextFromList
+            (
+                this.GetLocalizedValue("Chat.EnchantFail1"),
+                this.GetLocalizedValue("Chat.EnchantFail2"),
+                this.GetLocalizedValue("Chat.EnchantFail3")
+            );
         }
     }
 
@@ -263,7 +324,7 @@ internal sealed class EnchanterNPC : ModNPC
         NPC.townNPC = true;
         NPC.friendly = true;
 
-        AnimationType = NPCID.Wizard;
+        AnimationType = NPCID.DyeTrader;
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -279,13 +340,11 @@ internal sealed class EnchanterNPC : ModNPC
         if (EnchanterRespawnSystem.CanEnchanterRespawn)
             return true;
 
-        foreach (var player in Main.ActivePlayers)
-        {
-            if (player.armor[0].type > ItemID.None && player.armor[1].type > ItemID.None && player.armor[2].type > ItemID.None)
-                return true;
-        }
+        var timId = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.Tim];
 
-        return false;
+        Main.NewText(Main.BestiaryTracker.Kills.GetKillCount(timId));
+
+        return Main.BestiaryTracker.Kills.GetKillCount(timId) > 0;
     }
 
     public override void HitEffect(NPC.HitInfo hit)
@@ -321,6 +380,11 @@ internal sealed class EnchanterNPC : ModNPC
         Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, NPC.IsShimmerVariant ? armShimmerGore : armGore);
         Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? legShimmerGore : legGore);
         Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? legShimmerGore : legGore);
+    }
+
+    public override void FindFrame(int frameHeight)
+    {
+        base.FindFrame(frameHeight);
     }
 
     public override void TownNPCAttackStrength(ref int damage, ref float knockback)

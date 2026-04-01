@@ -16,21 +16,33 @@ NPCs: {
 			LikeNPC: I've enjoyed researching {NPCName}'s hexess.
 			DislikeNPC: I dislike {NPCName}.
 			HateNPC: I hate dealing with children, especially {NPCName}.
-			Princess_LovesNPC: I just love seeing {NPCName} do cool tricks! Wish he'd treat me similarly, though...
+			Princess_LovesNPC: I just love seeing {NPCName} do cool tricks! Wish she'd treat me similarly, though...
 			LikeNPC_Princess: I like {NPCName}.
 		}
 
 		Bestiary: Coming from the far lands of Bulgaria, this Enchanter helps anyone imbue latent armor energy into her collection of gems.
 
 		Names: {
-			Devvy: Devvy,
-			Misty: Misty,
+			Misty: Misty
+			Carousel: Carousel
+			Magicad: Magicad
+			Glorks: Glorks
+			Finellie: Finellie
+			Jarlsova: Jarlsova
+			Michelangela: Michelangela
 		}
 
 		Chat: {
 			Normal1: Tra-la-la!
 			Normal2: Stand back! I'm practicing a new spell.
 			Normal3: I cast, therefore I do.
+			EnchantSuccess1: It workedd! I managed to capture the essence of your worn armor into one of my gems, and it should be able to retain the essence for... essentially foreverr! On the house.
+			EnchantSuccess2: With this hex, the potent energy in this gem should stay pure for a good while. Make sure to make good use of itt!
+			EnchantFail1: I can capture latent energy from your worn armor in one of the gems I have, but a mismatch of pieces won't do! Try coming back once your worn gear synergizess.
+			EnchantFail2: I'm able to trap some power from your worn armor into this gem here, but I can't channel it well unless you come to me with a matching sett.
+			EnchantFail3: With enough effort, your armor's force can be split into this here gem, but I can only do it if your armor matchess!
+			EnchantTomorrow1: I only have enough mana to enchant a gem once a dayy. Come back tomorrow for my offerss.
+			EnchantTomorrow2: I'd love to enchant another gem for you! But I can't do it more than once a day without overworking myselff.
 		}
 
 		EnchantButton: Enchant
