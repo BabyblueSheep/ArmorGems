@@ -1,25 +1,39 @@
-EnchanterNPC.Bestiary: POOPOO
-
 NPCs: {
 	EnchanterNPC: {
-		DisplayName: Enchanter N P C
+		DisplayName: Enchanter
 
 		TownNPCMood: {
-			Content: I am content.
-			NoHome: I hate not having a home.
-			FarFromHome: I am too far from home.
-			LoveSpace: I love having so much space.
-			DislikeCrowded: I dislike how crowded I am.
-			HateCrowded: I hate how crowded I am.
-			LikeBiome: I like {BiomeName}.
-			DislikeBiome: I dislike {BiomeName}.
-			LoveNPC: I love {NPCName}.
-			LikeNPC: I like {NPCName}.
+			Content: My spirits are at restt.
+			NoHome: Please, get me a home. No rest means wicked spiritss.
+			FarFromHome: Lots of space here, but I feel tiredd. I would like to reset my energy state back at home.
+			LoveSpace: Loving the free space!
+			DislikeCrowded: I think I accidentally injured someone with my magicc. Please, get them to a safer space.
+			HateCrowded: There's too many people here, and they're draining all my energyy!
+			LikeBiome: "{BiomeName} is pleasant. Plenty of free space for practicing my magickss."
+			DislikeBiome: The {BiomeName} has no latent energy for me to channell.
+			HateBiome: Despite there being so much aura in {BiomeName}, it's impossible to focus welll!
+			LoveNPC: There's so many topics to discuss with {NPCName}!
+			LikeNPC: I've enjoyed researching {NPCName}'s hexess.
 			DislikeNPC: I dislike {NPCName}.
-			HateNPC: I hate {NPCName}.
+			HateNPC: I hate dealing with children, especially {NPCName}.
+			Princess_LovesNPC: I just love seeing {NPCName} do cool tricks! Wish he'd treat me similarly, though...
 			LikeNPC_Princess: I like {NPCName}.
-			Princess_LovesNPC: I like {NPCName}.
 		}
+
+		Bestiary: Coming from the far lands of Bulgaria, this Enchanter helps anyone imbue latent armor energy into her collection of gems.
+
+		Names: {
+			Devvy: Devvy,
+			Misty: Misty,
+		}
+
+		Chat: {
+			Normal1: Tra-la-la!
+			Normal2: Stand back! I'm practicing a new spell.
+			Normal3: I cast, therefore I do.
+		}
+
+		EnchantButton: Enchant
 	}
 }
 

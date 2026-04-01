@@ -71,18 +71,34 @@ internal sealed class EnchanterNPC : ModNPC
         GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Gore_Hat_Party");
         GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Gore_Arm");
         GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Gore_Leg");
-
+        
         GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Hat");
-        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Scrap1");
-        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Scrap2");
-        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Scrap3");
+        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Hat_Party");
+        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Arm");
+        GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, "ArmorGems/Assets/EnchanterNPC_Shimmer_Gore_Leg");
+
+        On_AllPersonalitiesModifier.ModifyShopPrice_Relationships += MakeNPCHatePrincess;
+    }
+
+    public override void Unload()
+    {
+        On_AllPersonalitiesModifier.ModifyShopPrice_Relationships -= MakeNPCHatePrincess;
+    }
+
+    private void MakeNPCHatePrincess(On_AllPersonalitiesModifier.orig_ModifyShopPrice_Relationships orig, HelperInfo info, ShopHelper shopHelperInstance)
+    {
+        if (info.npc.type != ModContent.NPCType<EnchanterNPC>())
+        {
+            orig(info, shopHelperInstance);
+            return;
+        }
     }
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[Type] = 23;
-        NPCID.Sets.ExtraFramesCount[Type] = 7;
-        NPCID.Sets.AttackFrameCount[Type] = 2;
+        Main.npcFrameCount[Type] = 25;
+        NPCID.Sets.ExtraFramesCount[Type] = 9;
+        NPCID.Sets.AttackFrameCount[Type] = 4;
 
         NPCID.Sets.DangerDetectRange[Type] = 700;
         NPCID.Sets.PrettySafe[Type] = 100;
@@ -105,21 +121,22 @@ internal sealed class EnchanterNPC : ModNPC
         NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
         NPC.Happiness
-            .SetBiomeAffection<HallowBiome>(AffectionLevel.Like)
-            .SetBiomeAffection<OceanBiome>(AffectionLevel.Dislike)
-            .SetNPCAffection(NPCID.Golfer, AffectionLevel.Love)
-            .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
-            .SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Dislike)
-            .SetNPCAffection(NPCID.Cyborg, AffectionLevel.Hate);
+            .SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
+            .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike)
+            .SetNPCAffection(NPCID.Wizard, AffectionLevel.Love)
+            .SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Love)
+            .SetNPCAffection(NPCID.Cyborg, AffectionLevel.Like)
+            .SetNPCAffection(NPCID.Angler, AffectionLevel.Hate)
+            .SetNPCAffection(NPCID.Princess, AffectionLevel.Hate);
 
-        ContentSamples.NpcBestiaryRarityStars[Type] = 2;
+        ContentSamples.NpcBestiaryRarityStars[Type] = 3;
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
         bestiaryEntry.Info.AddRange([
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
-			new FlavorTextBestiaryInfoElement("Mods.ArmorGems.EnchanterNPC.Bestiary"),
+			new FlavorTextBestiaryInfoElement("Mods.ArmorGems.NPCs.EnchanterNPC.Bestiary"),
         ]);
     }
 
@@ -134,10 +151,8 @@ internal sealed class EnchanterNPC : ModNPC
     public override List<string> SetNPCNameList()
     {
         return [
-            "Billy",
-            "Gilly",
-            "Jilly",
-            "Tilly"
+            this.GetLocalizedValue("Names.Devvy"),
+            this.GetLocalizedValue("Names.Misty"),
         ];
     }
 
@@ -145,15 +160,16 @@ internal sealed class EnchanterNPC : ModNPC
     {
         var chat = new WeightedRandom<string>();
 
-        chat.Add("peepee");
-        chat.Add("poopoo");
+        chat.Add(this.GetLocalizedValue("Chat.Normal1"));
+        chat.Add(this.GetLocalizedValue("Chat.Normal2"));
+        chat.Add(this.GetLocalizedValue("Chat.Normal3"));
 
         return chat;
     }
 
     public override void SetChatButtons(ref string button, ref string button2)
     {
-        button = "Enchant";
+        button = this.GetLocalizedValue("EnchantButton");
     }
 
     public override void OnChatButtonClicked(bool firstButton, ref string shop)
@@ -167,7 +183,7 @@ internal sealed class EnchanterNPC : ModNPC
             var chestplateItem = Main.LocalPlayer.armor[1];
             var leggingsItem = Main.LocalPlayer.armor[2];
 
-            var hasSetBonus = false;
+            bool hasSetBonus;
 
             void CheckForSetBonus()
             {
@@ -292,19 +308,19 @@ internal sealed class EnchanterNPC : ModNPC
         var armGore = Mod.Find<ModGore>("EnchanterNPC_Gore_Arm").Type;
         var legGore = Mod.Find<ModGore>("EnchanterNPC_Gore_Leg").Type;
 
-        var shimmerHatGore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Hat").Type;
-        var shimmerScrap1Gore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Scrap1").Type;
-        var shimmerScrap2Gore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Scrap2").Type;
-        var shimmerScrap3Gore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Scrap3").Type;
+        var headShimmerGore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Hat").Type;
+        var headPartyShimmerGore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Hat_Party").Type;
+        var armShimmerGore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Arm").Type;
+        var legShimmerGore = Mod.Find<ModGore>("EnchanterNPC_Shimmer_Gore_Leg").Type;
 
         var hatGore = NPC.GetPartyHatGore();
         if (hatGore > 0)
             Gore.NewGore(NPC.position, NPC.velocity, hatGore);
-        Gore.NewGore(NPC.position, NPC.velocity, NPC.IsShimmerVariant ? shimmerHatGore : (hatGore > 0 ? headPartyGore : headGore));
-        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, NPC.IsShimmerVariant ? shimmerScrap1Gore : armGore);
-        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, NPC.IsShimmerVariant ? shimmerScrap2Gore : armGore);
-        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? shimmerScrap3Gore : legGore);
-        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? shimmerScrap3Gore : legGore);
+        Gore.NewGore(NPC.position, NPC.velocity, NPC.IsShimmerVariant ? (hatGore > 0 ? headPartyShimmerGore : headShimmerGore) : (hatGore > 0 ? headPartyGore : headGore));
+        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, NPC.IsShimmerVariant ? armShimmerGore : armGore);
+        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, NPC.IsShimmerVariant ? armShimmerGore : armGore);
+        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? legShimmerGore : legGore);
+        Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, NPC.IsShimmerVariant ? legShimmerGore : legGore);
     }
 
     public override void TownNPCAttackStrength(ref int damage, ref float knockback)
