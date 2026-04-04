@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 
 namespace ArmorGems;
@@ -29,9 +30,58 @@ internal abstract class BaseArmorGem : ModItem
         }
     }
 
-    public Item HeadArmorItem { get; set; }
-    public Item BodyArmorItem { get; set; }
-    public Item LegsArmorItem { get; set; }
+    private readonly static Item _defaultHeadItem = new Item(ItemID.CopperHelmet);
+    private readonly static Item _defaultBodyItem = new Item(ItemID.CopperChainmail);
+    private readonly static Item _defaultLegsItem = new Item(ItemID.CopperGreaves);
+
+    private Item _headArmorItem;
+    public Item HeadArmorItem
+    {
+        get
+        {
+            if (_headArmorItem == null || _headArmorItem.type >= ItemLoader.ItemCount || _headArmorItem.type == ModContent.ItemType<UnloadedItem>())
+            {
+                return _defaultHeadItem;
+            }
+            return _headArmorItem;
+        }
+        set
+        {
+            _headArmorItem = value;
+        }
+    }
+    private Item _bodyArmorItem;
+    public Item BodyArmorItem
+    {
+        get
+        {
+            if (_bodyArmorItem == null || _bodyArmorItem.type >= ItemLoader.ItemCount || _bodyArmorItem.type == ModContent.ItemType<UnloadedItem>())
+            {
+                return _defaultBodyItem;
+            }
+            return _bodyArmorItem;
+        }
+        set
+        {
+            _bodyArmorItem = value;
+        }
+    }
+    private Item _legsArmorItem;
+    public Item LegsArmorItem
+    {
+        get
+        {
+            if (_legsArmorItem == null || _legsArmorItem.type >= ItemLoader.ItemCount || _legsArmorItem.type == ModContent.ItemType<UnloadedItem>())
+            {
+                return _defaultLegsItem;
+            }
+            return _legsArmorItem;
+        }
+        set
+        {
+            _legsArmorItem = value;
+        }
+    }
 
     private static readonly Player _dummyPlayer = new Player();
 
@@ -221,6 +271,8 @@ internal abstract class BaseArmorGem : ModItem
     }
 }
 
+//I don't know how to make players wear multiple of the same accessory.
+//Solution: identical duplicate instances (with name changes for flavour).
 internal sealed class AwkwardArmorGem : BaseArmorGem
 {
     public override string NameKey => "DisplayNameAwkward";
@@ -306,4 +358,26 @@ internal sealed class BasicArmorGem : BaseArmorGem
 internal sealed class AdvancedArmorGem : BaseArmorGem
 {
     public override string NameKey => "DisplayNameAdvanced";
+}
+
+internal sealed class SweetArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameSweet";
+}
+internal sealed class SaltyArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameSalty";
+}
+internal sealed class SpicyArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameSpicy";
+}
+
+internal sealed class FluffyArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameFluffy";
+}
+internal sealed class ScalyArmorGem : BaseArmorGem
+{
+    public override string NameKey => "DisplayNameScaly";
 }

@@ -195,6 +195,13 @@ internal sealed class EnchanterNPC : ModNPC
 
             ModContent.ItemType<BasicArmorGem>(),
             ModContent.ItemType<AdvancedArmorGem>(),
+
+            ModContent.ItemType<SweetArmorGem>(),
+            ModContent.ItemType<SaltyArmorGem>(),
+            ModContent.ItemType<SpicyArmorGem>(),
+
+            ModContent.ItemType<FluffyArmorGem>(),
+            ModContent.ItemType<ScalyArmorGem>(),
         ];
     }
 
@@ -234,6 +241,8 @@ internal sealed class EnchanterNPC : ModNPC
         chat.Add(this.GetLocalizedValue("Chat.Normal1"));
         chat.Add(this.GetLocalizedValue("Chat.Normal2"));
         chat.Add(this.GetLocalizedValue("Chat.Normal3"));
+        chat.Add(this.GetLocalizedValue("Chat.Normal4"));
+        chat.Add(this.GetLocalizedValue("Chat.Normal5"));
 
         return chat;
     }
@@ -373,8 +382,6 @@ internal sealed class EnchanterNPC : ModNPC
             return true;
 
         var timId = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.Tim];
-
-        Main.NewText(Main.BestiaryTracker.Kills.GetKillCount(timId));
 
         return Main.BestiaryTracker.Kills.GetKillCount(timId) > 0;
     }

@@ -1,1 +1,10 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+--==[[ OVERVIEW ]]==--
+[Calamity] Armor Gems is a mod that lets you harness the power of armor within powerful "Armor Gem" accessories! After defeating the vile wizard Tim, a new face can appear to assist you in the creation of these powerful jewels. Discover over two dozen accessories, all with their own effect!
+
+--==[[ COMPATABILITY ]]==--
+No mod has been left unturned! [Calamity] Armor Gems features support for nearly every mod on the browser, thanks to how the mod was constructed. No need for addons in order to get a gem for your favorite mod! As long as your gems feature different prefixes, you can use as many as you wish.
+
+--==[[ DEVELOPMENT ]]==--
+babybluesheep - Coding
+caligalusAquarium - Concepting
+split - Coloring

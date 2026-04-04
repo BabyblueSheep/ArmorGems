@@ -34,8 +34,10 @@ NPCs: {
 
 		Chat: {
 			Normal1: Tra-la-la!
-			Normal2: Stand back! I'm practicing a new spell.
+			Normal2: Stand back! I'm practicing a new spelll.
 			Normal3: I cast, therefore I do.
+			Normal4: Tim's powers are old, and ancient... He taught me everything i know.
+			Normal5: In my free time, I cast other spells.
 			EnchantSuccess1: It workedd! I managed to capture the essence of your worn armor into one of my gems, and it should be able to retain the essence for... essentially foreverr! On the house.
 			EnchantSuccess2: With this hex, the potent energy in this gem should stay pure for a good while. Make sure to make good use of itt!
 			EnchantFail1: I can capture latent energy from your worn armor in one of the gems I have, but a mismatch of pieces won't do! Try coming back once your worn gear synergizess.
@@ -73,6 +75,11 @@ Items: {
 		DisplayNameGolden: Golden {0} Gem
 		DisplayNameBasic: Basic {0} Gem
 		DisplayNameAdvanced: Advanced {0} Gem
+		DisplayNameSweet: Sweet {0} Gem
+		DisplayNameSalty: Salty {0} Gem
+		DisplayNameSpicy: Spicy {0} Gem
+		DisplayNameFluffy: Fluffy {0} Gem
+		DisplayNameScaly: Scaly {0} Gem
 	}
 
 	AwkwardArmorGem: {
@@ -87,6 +94,116 @@ Items: {
 
 	ThickArmorGem: {
 		DisplayName: Thick Armor Gem
+		Tooltip: ""
+	}
+
+	AdvancedArmorGem: {
+		DisplayName: Advanced Armor Gem
+		Tooltip: ""
+	}
+
+	AncientArmorGem: {
+		DisplayName: Ancient Armor Gem
+		Tooltip: ""
+	}
+
+	BadArmorGem: {
+		DisplayName: Bad Armor Gem
+		Tooltip: ""
+	}
+
+	BasicArmorGem: {
+		DisplayName: Basic Armor Gem
+		Tooltip: ""
+	}
+
+	BlessedArmorGem: {
+		DisplayName: Blessed Armor Gem
+		Tooltip: ""
+	}
+
+	ChippedArmorGem: {
+		DisplayName: Chipped Armor Gem
+		Tooltip: ""
+	}
+
+	CrackedArmorGem: {
+		DisplayName: Cracked Armor Gem
+		Tooltip: ""
+	}
+
+	CursedArmorGem: {
+		DisplayName: Cursed Armor Gem
+		Tooltip: ""
+	}
+
+	DullArmorGem: {
+		DisplayName: Dull Armor Gem
+		Tooltip: ""
+	}
+
+	FuturisticArmorGem: {
+		DisplayName: Futuristic Armor Gem
+		Tooltip: ""
+	}
+
+	GoldenArmorGem: {
+		DisplayName: Golden Armor Gem
+		Tooltip: ""
+	}
+
+	GoodArmorGem: {
+		DisplayName: Good Armor Gem
+		Tooltip: ""
+	}
+
+	ModernArmorGem: {
+		DisplayName: Modern Armor Gem
+		Tooltip: ""
+	}
+
+	NeutralArmorGem: {
+		DisplayName: Neutral Armor Gem
+		Tooltip: ""
+	}
+
+	PolishedArmorGem: {
+		DisplayName: Polished Armor Gem
+		Tooltip: ""
+	}
+
+	PrehistoricArmorGem: {
+		DisplayName: Prehistoric Armor Gem
+		Tooltip: ""
+	}
+
+	ShinyArmorGem: {
+		DisplayName: Shiny Armor Gem
+		Tooltip: ""
+	}
+
+	FluffyArmorGem: {
+		DisplayName: Fluffy Armor Gem
+		Tooltip: ""
+	}
+
+	SaltyArmorGem: {
+		DisplayName: Salty Armor Gem
+		Tooltip: ""
+	}
+
+	ScalyArmorGem: {
+		DisplayName: Scaly Armor Gem
+		Tooltip: ""
+	}
+
+	SpicyArmorGem: {
+		DisplayName: Spicy Armor Gem
+		Tooltip: ""
+	}
+
+	SweetArmorGem: {
+		DisplayName: Sweet Armor Gem
 		Tooltip: ""
 	}
 }
